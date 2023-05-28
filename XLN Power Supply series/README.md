@@ -13,7 +13,7 @@ Manual: [Series Manual](https://bkpmedia.s3.amazonaws.com/downloads/manuals/en-u
 Data Sheet: [Series Data Sheet](https://bkpmedia.s3.amazonaws.com/downloads/datasheets/en-us/XLN_datasheet.pdf)
 
 ### Script Usage
-<br>
+
 The following steps must be done before using these scripts: 
 
 1) Identify the serial port name of your instrument. On Windows, this is a ```COMxx``` port name. On MacOS, this is ```/dev/tty.usbserial-{sernum}```, where ```{sernum}``` is the serial number of the XLN power supply.
@@ -34,11 +34,18 @@ portname = '/dev/tty.usbserial-275K22178'   # change the device port name for yo
 4) The XLN power supplies use an internal serial-to-USB bridge chip (CP1202), that is bus-powered by the USB cable. This means that even when the power supply is unpowered, or when the internal processor is unresponsive, the serial port will be normally enumerated and opened. This requires another level of authentication before starting sending commands to the XLN power supply. We verify that the MODEL string returned by the instrument matches the expected ```model_id``` string, and issue and error when it fails to return the correct model string. 
 
 ### Operating Tips for the XLN Series
+
+Whenever a remote command is received from the serial port, the XLN power supply enters REMOTE MODE, and the front display indicates __RMT__ in the lower-right corner. 
+
 <br>
-Whenever a remote command is received from the serial port, the XLN power supply enters REMOTE MODE, and the front display indicates **RMT** in the lower-right corner. <br>
-The frontal keyboard is LOCKED in RMT mode, and the user cannot access any local function. <br>
-To restore local control, you need to press the **decimal point key** ```[.]```, which unlocks the keypad. 
+
+The frontal keyboard is LOCKED in RMT mode, and the user cannot access any local function. 
+
+<br>
+
+To restore local control, you need to press the __decimal point key__  ```[.]```  which unlocks the keypad. 
 
 ---
+
 <br>
 
