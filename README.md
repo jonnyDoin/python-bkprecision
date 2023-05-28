@@ -4,15 +4,8 @@ This repository contains python example scripts for remote programming of B&K Pr
 
 It is developed by GridVortex Systems for [CISTEK Equipamentos].
 
----
-<br>
-
 The repo has code examples for several instrument families, and general information and documentation for each family.
 
-
----
-
-<br>
 
 ## Objectives 
 
@@ -22,8 +15,6 @@ The techniques exemplified in the scripts are not exclusive to BK instruments, a
 <br>
 Always read the manufacturers programming manual for the set of SCPI and proprietary commands supported by the instrument.
 
---- 
-<br>
 
 ## LICENSE
 
@@ -33,8 +24,5 @@ Please read the License terms found in the LICENSE file in this repository.
 --- 
 
 <br>
-
-
-
 
 [CISTEK Equipamentos]: https://www.cistek.com.br/
