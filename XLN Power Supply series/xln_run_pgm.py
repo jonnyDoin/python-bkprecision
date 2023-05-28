@@ -1,5 +1,5 @@
 ###################################################################################################
-#   XLN_TEST_PGM - RUN A STORED PROGRAM FROM THE MEMORY
+#   XLN_RUN_PGM - RUN A STORED PROGRAM FROM THE MEMORY
 #   --------------------------------------------------------------------
 #
 #   This is an example code to demonstrate the BK PRECISION XLN Programmable Power Supply Series. 

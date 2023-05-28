@@ -25,7 +25,7 @@ Always read the manufacturers programming manual for the set of SCPI and proprie
 --- 
 <br>
 
-##LICENSE
+## LICENSE
 
 All example codes here are developed by Gridvortex and published as Open Source under a BSD 2-Clause License. <br>
 Please read the License terms found in the LICENSE file in this repository. 
