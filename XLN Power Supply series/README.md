@@ -35,8 +35,10 @@ portname = '/dev/tty.usbserial-275K22178'   # change the device port name for yo
 
 ### Operating Tips for the XLN Series
 <br>
-Whenever a remote command is received from the serial port, the XLN power supply enters REMOTE MODE, and the front display indicates __RMT__ in the lower-right corner. <br>
+Whenever a remote command is received from the serial port, the XLN power supply enters REMOTE MODE, and the front display indicates **RMT** in the lower-right corner. <br>
 The frontal keyboard is LOCKED in RMT mode, and the user cannot access any local function. <br>
-To restore local control, you need to press the __decimal point key__ ```[.]```, which unlocks the keypad. 
+To restore local control, you need to press the **decimal point key** ```[.]```, which unlocks the keypad. 
 
+---
+<br>
 
