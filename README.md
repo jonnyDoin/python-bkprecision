@@ -29,4 +29,4 @@ Please read the License terms found in the [LICENSE] file in this repository.
 <br>
 
 [CISTEK Equipamentos]: https://www.cistek.com.br/
-[LICENSE]:(/LICENSE)
+[LICENSE]:./LICENSE
