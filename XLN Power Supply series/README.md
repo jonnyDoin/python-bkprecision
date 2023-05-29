@@ -15,7 +15,7 @@ Serial-to-USB Bridge: [CP1202](/Doc/CP2102-9.pdf)
 ### Script Usage
 The following steps must be done before using these scripts: 
 
-1) Identify the serial port name of your instrument. On Windows, this is a ```COMxx``` port name. On MacOS, this is ```/dev/tty.usbserial-{sernum}```, where ```{sernum}``` is the serial number of the XLN power supply.
+1) Identify the serial port name of your instrument. On Windows, this is a ```COMxx``` port name. On MacOS, this is ```/dev/tty.usbserial-{sernum}```, where ```{sernum}``` is the serial number of the XLN power supply. You can use the script [list_ports.py](./list_ports.py) to list all serial port devices in your system, and identify the correct Silicon Labs [CP1202](../Doc/CP2102-9.pdf) USB Bridge device port to use.
 2) Set the ```portname``` variable to your instrument serial port name.
 3) Change the ```model_id``` variable to your XLN power supply model. 
 
