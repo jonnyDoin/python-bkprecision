@@ -89,29 +89,28 @@ import serial
 import time
 from math import ceil as ceil
 import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
 
-script_ver = "v1.0.0"
+script_ver = "v1.0.1"
 model_id = b'XLN3640'                       # change the model_id to your XLN model
 portname = '/dev/tty.usbserial-275K22178'   # change the device port name for your device name!
                                             # on windows use 'COMxx'
 
-# staircase definition
+# staircase waveform definition
 vp = [0.0,  0.5,  1.0,  1.5,  2.0,  2.5,  3.0,  3.5,  4.0,  4.5,  5.0,  5.5,  6.0,  6.5,  7.0,  7.5,  8.0,  8.5,  9.0,  9.5, 10.0,  0.0,  0.0]
 tp = [0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.0]
 
 # plot setup
+plt.ion()                                   # using matplotlib interactive mode for realtime update
 fig = plt.figure(figsize=(6, 3))
 x = [0]
 y = [0]
 ln, = plt.plot(x, y, '-')
 plt.axis([0, 500, 0, 10])
-yplot = -1.0
 
 cmd_vout = "SOUR:VOLT {}\r\n"
 
-# plot animation update function
-def animate(frame):
+# plot realtime update function
+def update_plt(yplot):
     x.append(x[-1] + 1)
     y.append(yplot)
     ln.set_data(x, y) 
@@ -135,11 +134,13 @@ def write_vout(instr, vout):
     write_cmd(instr, cmd_vout, vout)
 
 def read_pause(instr, tpause):
-    global yplot
+    vout = -1
     pts = ceil(tpause / 0.080)
     for i in range(pts):
-        yplot = read_vout(instr)
+        vout = read_vout(instr)
+        update_plt(vout)
         plt.pause(0.010)
+    return vout
 
 # instrument setup
 print()
@@ -177,23 +178,22 @@ if bk.is_open:
         bk.write("STATUS?\r\n".encode())
         print("STATUS? : ", bk.readline())
 
-        # start animation window
-        animation = FuncAnimation(fig, animate, interval=20)
+        # draw initial figure
         plt.show(block=False)
         plt.pause(0.1)
         
         # generate the staircase ramp
-        np = 0
+        np = 0; vout = -1
         while tp[np] != 0.0:
             write_vout(bk, vp[np])
-            read_pause(bk, tp[np])
-            print("Vout: ", yplot)
+            vout = read_pause(bk, tp[np])
+            print("Vout: ", vout)
             np = np + 1
-        read_pause(bk, 0.2)
-        print("Vout: ", yplot)
+        vout = read_pause(bk, 0.2)
+        print("Vout: ", vout)
         bk.write("OUTP OFF\r\n".encode())
         print("OUTP OFF : ", bk.readline())
-        plt.show()
+        plt.show(block=True)    # blocks until user closes plot window
     else:
         print('MODEL ID ERROR!')
     bk.close()
