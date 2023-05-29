@@ -149,13 +149,13 @@ if bk.is_open:
         time.sleep(0.2);    bk.write("PROG:TOTA {}\r\n".format(len(vp)).encode());  print("PROG:TOTA {}".format(len(vp)))
 
         # generate all the program steps
-        np = 0
-        while np < len(vp):
-            time.sleep(0.2);    bk.write("PROG:STEP {}\r\n".format(np+1).encode());         print("PROG:STEP {}".format(np+1))
-            time.sleep(0.2);    bk.write("PROG:STEP:CURR {}\r\n".format(ip[np]).encode());  print("PROG:STEP:CURR {}".format(ip[np]))
-            time.sleep(0.2);    bk.write("PROG:STEP:VOLT {}\r\n".format(vp[np]).encode());  print("PROG:STEP:VOLT {}".format(vp[np]))
-            time.sleep(0.2);    bk.write("PROG:STEP:ONT {}\r\n".format(tp[np]).encode());   print("PROG:STEP:ONT {}".format(tp[np]))
-            np = np + 1
+        k = 0
+        while k < len(vp):
+            time.sleep(0.2);    bk.write("PROG:STEP {}\r\n".format(k+1).encode());         print("PROG:STEP {}".format(k+1))
+            time.sleep(0.2);    bk.write("PROG:STEP:CURR {}\r\n".format(ip[k]).encode());  print("PROG:STEP:CURR {}".format(ip[k]))
+            time.sleep(0.2);    bk.write("PROG:STEP:VOLT {}\r\n".format(vp[k]).encode());  print("PROG:STEP:VOLT {}".format(vp[k]))
+            time.sleep(0.2);    bk.write("PROG:STEP:ONT {}\r\n".format(tp[k]).encode());   print("PROG:STEP:ONT {}".format(tp[k]))
+            k = k + 1
 
         # set NEXT program as 0
         time.sleep(0.2);    bk.write("PROG:NEXT 0\r\n".encode());                   print("PROG:NEXT 0")

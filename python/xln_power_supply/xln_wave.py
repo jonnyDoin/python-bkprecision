@@ -223,13 +223,13 @@ if bk.is_open:
         plt.pause(0.1)
         
         # generate the staircase ramp and read (V,I)
-        np = 0; vout = -1
-        while tp[np] != 0.0:
-            write_vout(bk, vp[np])
-            write_iout(bk, ip[np])
-            vout, iout = read_pause(bk, tp[np])
+        k = 0; vout = -1
+        while tp[k] != 0.0:
+            write_vout(bk, vp[k])
+            write_iout(bk, ip[k])
+            vout, iout = read_pause(bk, tp[k])
             print("Vout: ", vout, "Iout: ", iout)
-            np = np + 1
+            k = k + 1
         vout, iout = read_pause(bk, 0.2)
         print("Vout: ", vout, "Iout: ", iout)
         bk.write("OUTP OFF\r\n".encode())
