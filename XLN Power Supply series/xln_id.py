@@ -82,7 +82,7 @@
 import serial
 import time
 
-script_ver = "v1.0.0"
+script_ver = "v1.0.2"
 model_id = b'XLN3640'                       # change the model_id to your XLN model
 portname = '/dev/tty.usbserial-275K22178'   # change the device port name for your device name!
                                             # on windows use 'COMxx'
@@ -109,10 +109,11 @@ if bk.is_open:
     sernum = bk.readline()                  
     bk.write("VER?\r\n".encode())          
     version = bk.readline()
-    print('Instrument ID:', idn)
-    print('Instrument MODEL:', model)
-    print('Instrument VERSION:', version)
-    print('Instrument SN:', sernum)
+    print('portname:\t\t', portname)
+    print('Instrument ID:\t\t', idn)
+    print('Instrument MODEL:\t', model)
+    print('Instrument VERSION:\t', version)
+    print('Instrument SN:\t\t', sernum)
     if model.find(model_id) != -1:
         bk.write("*cls\r\n".encode())
         bk.write("OUTP ON\r\n".encode())
