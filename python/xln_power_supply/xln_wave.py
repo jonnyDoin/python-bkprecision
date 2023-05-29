@@ -89,60 +89,98 @@ import serial
 import time
 from math import ceil as ceil
 import matplotlib.pyplot as plt
+import matplotlib as mpl
+import matplotlib.style as mplstyle
 
-script_ver = "v1.0.2"
+script_ver = "v1.0.5"
 model_id = b'XLN3640'                       # change the model_id to your XLN model
 portname = '/dev/tty.usbserial-275K22178'   # change the device port name for your device name!
                                             # on windows use 'COMxx'
 
 # staircase waveform definition
 vp = [0.0,  0.5,  1.0,  1.5,  2.0,  2.5,  3.0,  3.5,  4.0,  4.5,  5.0,  5.5,  6.0,  6.5,  7.0,  7.5,  8.0,  8.5,  9.0,  9.5, 10.0,  0.0,  0.0]
-tp = [0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.0]
+ip = [6.0,  6.0,  6.0,  6.0,  6.0,  6.0,  6.0,  6.0,  6.0,  6.0,  6.0,  6.0,  6.0,  6.0,  6.0,  6.0,  6.0,  6.0,  6.0,  6.0, 16.0,  6.0,  6.0]
+tp = [1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 0.0]
 
 # plot setup
+# mplstyle.use('dark_background')             # dark background with white lines
+mplstyle.use('seaborn-dark')                # gray waveform background with white lines
 plt.ion()                                   # using matplotlib interactive mode for realtime update
 fig = plt.figure(figsize=(6, 3))
 x = [0]
-y = [0]
-ln, = plt.plot(x, y, '-')
+y1 = [0]
+y2 = [0]
+ln1, = plt.plot(x, y1, '-g', label='VOUT')
+ln2, = plt.plot(x, y2, '-r', label='IOUT')
+plt.title('{} REALTIME OUTPUT'.format(model_id.decode()))
+plt.grid()
+plt.legend()
 plt.axis([0, 500, 0, 10])
+plt.setp(ln1, 'color', 'g', 'linewidth', 2.0)
+plt.setp(ln2, 'color', 'r', 'linewidth', 2.0)
 
+# command to write VOUT
 cmd_vout = "SOUR:VOLT {}\r\n"
 
-# plot realtime update function
-def update_plt(yplot):
-    x.append(x[-1] + 1)
-    y.append(yplot)
-    ln.set_data(x, y) 
-    return ln,
+# command to write IOUT
+cmd_iout = "SOUR:CURR {}\r\n"
 
+# plot realtime update function
+def update_plt(yplot1, yplot2):
+    x.append(x[-1] + 1)
+    y1.append(yplot1)
+    y2.append(yplot2)
+    ln1.set_data(x, y1) 
+    ln2.set_data(x, y2) 
+    return ln1, ln2,
+
+# measure VOUT in Volts. return -1 when read error.
 def read_vout(instr):
     try:
         instr.write("VOUT?\r\n".encode())
         rd = instr.readline()
-        # print('rd:', rd)
+        # print('v:', rd)
         vout = float(rd)
     except:
         vout = -1.0
     return vout
     
+# measure IOUT in Amps. return -1 when read error.
+def read_iout(instr):
+    try:
+        instr.write("IOUT?\r\n".encode())
+        rd = instr.readline()
+        # print('i:', rd)
+        iout = float(rd)
+    except:
+        iout = -1.0
+    return iout
+    
+# generic write command with numeric argument
 def write_cmd(instr, cmd, arg):
     _cmd = cmd.format(arg).encode()
     instr.write(_cmd)
 
+# write the VOUT setting to the instrument
 def write_vout(instr, vout):
     write_cmd(instr, cmd_vout, vout)
 
-def read_pause(instr, tpause):
-    vout = -1
-    pts = ceil(tpause / 0.080)
-    for i in range(pts):
-        vout = read_vout(instr)
-        update_plt(vout)
-        plt.pause(0.010)
-    return vout
+# write the IOUT limit to the instrument
+def write_iout(instr, iout):
+    write_cmd(instr, cmd_iout, iout)
 
-# instrument setup
+# read (V,I) and update the realtime plot for the specified duration
+def read_pause(instr, tpause):
+    vout, iout = -1, -1
+    pts = ceil(tpause / 0.12)
+    for i in range(pts):
+        plt.pause(0.025)
+        vout = read_vout(instr)
+        iout = read_iout(instr)
+        update_plt(vout, iout)
+    return vout, iout
+
+# main code
 print()
 print('B&K PRECISION REMOTE CONTROL EXAMPLE BY CISTEK')
 print('REALTIME WAVEFORM ', script_ver)
@@ -172,6 +210,7 @@ if bk.is_open:
     print('Instrument SN:\t\t', sernum)
     if model.find(model_id) != -1:
         bk.write("*cls\r\n".encode())
+        
         # turn output ON
         bk.write("OUTP ON\r\n".encode())
         bk.write("OUTP?\r\n".encode())
@@ -183,15 +222,16 @@ if bk.is_open:
         plt.show(block=False)
         plt.pause(0.1)
         
-        # generate the staircase ramp
+        # generate the staircase ramp and read (V,I)
         np = 0; vout = -1
         while tp[np] != 0.0:
             write_vout(bk, vp[np])
-            vout = read_pause(bk, tp[np])
-            print("Vout: ", vout)
+            write_iout(bk, ip[np])
+            vout, iout = read_pause(bk, tp[np])
+            print("Vout: ", vout, "Iout: ", iout)
             np = np + 1
-        vout = read_pause(bk, 0.2)
-        print("Vout: ", vout)
+        vout, iout = read_pause(bk, 0.2)
+        print("Vout: ", vout, "Iout: ", iout)
         bk.write("OUTP OFF\r\n".encode())
         print("OUTP OFF : ", bk.readline())
         plt.show(block=True)    # blocks until user closes plot window
