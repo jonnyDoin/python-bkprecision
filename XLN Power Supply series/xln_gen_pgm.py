@@ -165,7 +165,7 @@ if bk.is_open:
         time.sleep(0.2);    
         
         # readback PROG 1 total steps to validate
-        bk.write("PROG 1\r\n".encode());                        
+        bk.write("PROG 1\r\n".encode());
         print("PROG 1")
         time.sleep(0.2)
         bk.write("PROG:TOTA?\r\n".encode())

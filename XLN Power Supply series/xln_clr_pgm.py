@@ -113,14 +113,14 @@ if bk.is_open:
     print('Serial port OPEN')
     bk.reset_input_buffer()
     bk.reset_output_buffer()
-    bk.write("\r\n".encode())               
-    bk.write("*idn?\r\n".encode())          
-    idn = bk.readline()                     
+    bk.write("\r\n".encode())
+    bk.write("*idn?\r\n".encode())
+    idn = bk.readline()
     bk.write("MODEL?\r\n".encode())
-    model = bk.readline()                   
-    bk.write("SYS:SER?\r\n".encode())          
-    sernum = bk.readline()                  
-    bk.write("VER?\r\n".encode())          
+    model = bk.readline()
+    bk.write("SYS:SER?\r\n".encode())
+    sernum = bk.readline()
+    bk.write("VER?\r\n".encode())
     version = bk.readline()
     print('Instrument ID:', idn)
     print('Instrument MODEL:', model)
@@ -133,16 +133,18 @@ if bk.is_open:
 
         # clear all programs
         time.sleep(0.2)
-        bk.write("PROG:CLE:ALL\r\n".encode());          print("PROG:CLE:ALL")
+        bk.write("PROG:CLE:ALL\r\n".encode());
+        print("PROG:CLE:ALL")
         time.sleep(0.2)
-        bk.write("PROG 1\r\n".encode());                print("PROG 1")
+        bk.write("PROG 1\r\n".encode());
+        print("PROG 1")
         bk.write("PROG:TOTA?\r\n".encode())
         steps = read_int_resp(bk)
         print("PROG:TOTA? : ", steps)
         if steps == 0:
             print('PROGRAM 1 IS EMPTY')
         else:
-            print('PROGRAM 1 IS NOT EMPTY!')
+            print('ERROR: PROGRAM 1 IS NOT EMPTY!')
     else:
         print('MODEL ID ERROR!')
     bk.close()

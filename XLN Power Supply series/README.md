@@ -6,9 +6,11 @@ These python scripts are for the BK XLN Series High Power Programmable DC Power 
 Models: XLN3640, XLN6024, XLN8018, XLN10014, XLN15010, XLN30052, XLN60026
 
 ### Documentation
-Manual: [Series Manual](https://bkpmedia.s3.amazonaws.com/downloads/manuals/en-us/XLN_manual.pdf)
-  
-Data Sheet: [Series Data Sheet](https://bkpmedia.s3.amazonaws.com/downloads/datasheets/en-us/XLN_datasheet.pdf)
+Manual: [Series Manual](doc/XLN_Series_manual.pdf)
+
+Data Sheet: [Series Data Sheet](doc/XLN_Series_datasheet.pdf)
+
+Serial-to-USB Bridge: [CP1202](doc/CP2102-9.pdf)
 
 ### Script Usage
 The following steps must be done before using these scripts: 
