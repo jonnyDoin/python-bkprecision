@@ -92,7 +92,7 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 import matplotlib.style as mplstyle
 
-script_ver = "v1.0.5"
+script_ver = "v1.0.6"
 model_id = b'XLN3640'                       # change the model_id to your XLN model
 portname = '/dev/tty.usbserial-275K22178'   # change the device port name for your device name!
                                             # on windows use 'COMxx'
@@ -120,10 +120,16 @@ plt.setp(ln1, 'color', 'g', 'linewidth', 2.0)
 plt.setp(ln2, 'color', 'r', 'linewidth', 2.0)
 
 # command to write VOUT
-cmd_vout = "SOUR:VOLT {}\r\n"
+cmd_wr_vout = "SOUR:VOLT {}\r\n"
 
 # command to write IOUT
-cmd_iout = "SOUR:CURR {}\r\n"
+cmd_wr_iout = "SOUR:CURR {}\r\n"
+
+# command to read VOUT
+cmd_rd_vout = "VOUT?\r\n"
+
+# command to read IOUT
+cmd_rd_iout = "IOUT?\r\n"
 
 # plot realtime update function
 def update_plt(yplot1, yplot2):
@@ -134,27 +140,16 @@ def update_plt(yplot1, yplot2):
     ln2.set_data(x, y2) 
     return ln1, ln2,
 
-# measure VOUT in Volts. return -1 when read error.
-def read_vout(instr):
+# read output value. return -1 if read error.
+def read_cmd(instr, cmd):
     try:
-        instr.write("VOUT?\r\n".encode())
+        instr.write(cmd.encode())
         rd = instr.readline()
-        # print('v:', rd)
-        vout = float(rd)
+        # print('rd:', rd)
+        val = float(rd)
     except:
-        vout = -1.0
-    return vout
-    
-# measure IOUT in Amps. return -1 when read error.
-def read_iout(instr):
-    try:
-        instr.write("IOUT?\r\n".encode())
-        rd = instr.readline()
-        # print('i:', rd)
-        iout = float(rd)
-    except:
-        iout = -1.0
-    return iout
+        val = -1.0
+    return val
     
 # generic write command with numeric argument
 def write_cmd(instr, cmd, arg):
@@ -163,18 +158,27 @@ def write_cmd(instr, cmd, arg):
 
 # write the VOUT setting to the instrument
 def write_vout(instr, vout):
-    write_cmd(instr, cmd_vout, vout)
+    write_cmd(instr, cmd_wr_vout, vout)
 
 # write the IOUT limit to the instrument
 def write_iout(instr, iout):
-    write_cmd(instr, cmd_iout, iout)
+    write_cmd(instr, cmd_wr_iout, iout)
+
+# read the VOUT output
+def read_vout(instr):
+    return read_cmd(instr, cmd_rd_vout)
+
+# read the IOUT output
+def read_iout(instr):
+    return read_cmd(instr, cmd_rd_iout)
 
 # read (V,I) and update the realtime plot for the specified duration
 def read_pause(instr, tpause):
     vout, iout = -1, -1
     pts = ceil(tpause / 0.12)
     for i in range(pts):
-        plt.pause(0.025)
+        plt.pause(0.001)
+        time.sleep(0.020)
         vout = read_vout(instr)
         iout = read_iout(instr)
         update_plt(vout, iout)
