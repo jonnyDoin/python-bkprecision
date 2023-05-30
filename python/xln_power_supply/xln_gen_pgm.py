@@ -87,15 +87,15 @@
 import serial
 import time
 
-script_ver = "v1.0.7"
+script_ver = "v1.0.10"
 model_id = b'XLN3640'                       # change the model_id to your XLN model
 portname = '/dev/tty.usbserial-275K22178'   # change the device port name for your device name!
                                             # on windows use 'COMxx'
 
 # program list definition: change these lists to modify the program list waveform
 vp = [0.0,  0.5,  1.0,  1.5,  2.0,  2.5,  3.0,  3.5,  4.0,  4.5,  5.0,  5.5,  6.0,  6.5,  7.0,  7.5,  8.0,  8.5,  9.0,  9.5,  10.0, 0.0]
-ip = [1.0,  1.0,  1.0,  1.0,  1.0,  1.0,  1.0,  1.0,  1.0,  1.0,  1.0,  1.0,  1.0,  1.0,  1.0,  1.0,  1.0,  1.0,  1.0,  1.0,  1.0,  1.0]
-tp = [0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 1.00, 1.00, 0.50]
+ip = [6.0,  6.0,  6.0,  6.0,  6.0,  6.0,  6.0,  6.0,  6.0,  6.0,  6.0,  6.0,  6.0,  6.0,  6.0,  6.0,  6.0,  6.0,  6.0,  6.0,  6.0,  0.0]
+tp = [0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50]
 
 def read_int_resp(instr):
     try:
@@ -134,7 +134,7 @@ if bk.is_open:
     print('Instrument MODEL:\t', model)
     print('Instrument VERSION:\t', version)
     print('Instrument SN:\t\t', sernum)
-    if model.find(model_id) != -1:
+    if model_id in model:
         bk.write("*cls\r\n".encode())
         bk.write("STATUS?\r\n".encode())
         print("STATUS? : ", bk.readline())

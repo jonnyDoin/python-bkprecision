@@ -88,7 +88,7 @@
 import serial
 import time
 
-script_ver = "v1.0.4"
+script_ver = "v1.0.5"
 model_id = b'XLN3640'                       # change the model_id to your XLN model
 portname = '/dev/tty.usbserial-275K22178'   # change the device port name for your device name!
                                             # on windows use 'COMxx'
@@ -130,7 +130,7 @@ if bk.is_open:
     print('Instrument MODEL:\t', model)
     print('Instrument VERSION:\t', version)
     print('Instrument SN:\t\t', sernum)
-    if model.find(model_id) != -1:
+    if model_id in model:
         bk.write("*cls\r\n".encode())
 
         bk.write("OUTP ON\r\n".encode())
@@ -150,22 +150,17 @@ if bk.is_open:
         else:
             bk.write("PROG:RUN ON\r\n".encode())
             print('PROG:RUN ON')
-            t = time.time()
             while True:
                 bk.write("PROG:RUN?\r\n".encode())
                 resp = bk.readline()
-                if resp.find(b'ON') != -1:
+                if b'ON' in resp:
                     print("PROGRAM RUNNING ...")
                     break
-                elif (time.time() - t) > 10:
-                    break
             while True:
                 bk.write("PROG:RUN?\r\n".encode())
                 resp = bk.readline()
-                if resp.find(b'OFF') != -1:
+                if b'OFF' in resp:
                     print("PROGRAM STOPPED.")
-                    break
-                elif (time.time() - t) > 10:
                     break
             bk.write("PROG:RUN OFF\r\n".encode())
         time.sleep(2)
