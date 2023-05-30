@@ -32,6 +32,15 @@ portname = '/dev/tty.usbserial-275K22178'   # change the device port name for yo
 
 4) The XLN power supplies use an internal serial-to-USB bridge chip (CP1202), that is bus-powered by the USB cable. This means that even when the power supply is unpowered, or when the internal processor is unresponsive, the serial port will be normally enumerated and opened. This requires another level of authentication before starting sending commands to the XLN power supply. We verify that the MODEL string returned by the instrument matches the expected ```model_id``` string, and issue and error when it fails to return the correct model string. 
 
+### Scripts included in this folder
+
+- [xln_id.py](./xln_id.py) — retrieves ID info of the connected XLN power supply
+- [xln_clr_pgm.py](./xln_clr_pgm.py) — clears all internal stored programs
+- [xln_gen_pgm.py](./xln_gen_pgm.py) — generates a staircase waveform in PROG1
+- [xln_gen_pgm_sine.py](./xln_gen_pgm_sine.py) — generates a sinewave burst waveform in PROG1
+- [xln_run_pgm.py](./xln_run_pgm.py) — executes the program stored at PROG1
+- [xln_wave.py](./xln_wave.py) — generate a staircase waveform and display realtime voltage and current
+
 ### Operating Tips for the XLN Series
 Whenever a remote command is received from the serial port, the XLN power supply enters REMOTE MODE, and the front display indicates __RMT__ in the lower-right corner. 
 
