@@ -85,12 +85,12 @@
 import serial
 import time
 
-script_ver = "v1.0.2"
+script_ver = "v1.0.3"
 model_id = b'XLN3640'                       # change the model_id to your XLN model
 portname = '/dev/tty.usbserial-275K22178'   # change the device port name for your device name!
                                             # on windows use 'COMxx'
 
-def read_int_resp(instr):
+def read_integer(instr):
     try:
         rd = instr.readline()
         # print('rd: ', rd)
@@ -99,7 +99,7 @@ def read_int_resp(instr):
         resp = 0
     return resp
 
-# instrument setup
+# main code
 print()
 print('B&K PRECISION REMOTE CONTROL EXAMPLE BY CISTEK')
 print('CLEAR ALL LIST PROGRAMS ', script_ver)
@@ -133,14 +133,16 @@ if bk.is_open:
         print("STATUS? : ", bk.readline())
 
         # clear all programs
-        time.sleep(0.2)
+        time.sleep(0.4)
         bk.write("PROG:CLE:ALL\r\n".encode());
         print("PROG:CLE:ALL")
-        time.sleep(0.2)
+        time.sleep(1.0)
         bk.write("PROG 1\r\n".encode());
         print("PROG 1")
+        time.sleep(0.4)
         bk.write("PROG:TOTA?\r\n".encode())
-        steps = read_int_resp(bk)
+        time.sleep(0.4)
+        steps = read_integer(bk)
         print("PROG:TOTA? : ", steps)
         if steps == 0:
             print('PROGRAM 1 IS EMPTY')

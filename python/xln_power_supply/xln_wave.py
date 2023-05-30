@@ -92,7 +92,7 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 import matplotlib.style as mplstyle
 
-script_ver = "v1.0.7"
+script_ver = "v1.0.8"
 model_id = b'XLN3640'                       # change the model_id to your XLN model
 portname = '/dev/tty.usbserial-275K22178'   # change the device port name for your device name!
                                             # on windows use 'COMxx'

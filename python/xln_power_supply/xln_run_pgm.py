@@ -88,12 +88,12 @@
 import serial
 import time
 
-script_ver = "v1.0.5"
+script_ver = "v1.0.7"
 model_id = b'XLN3640'                       # change the model_id to your XLN model
 portname = '/dev/tty.usbserial-275K22178'   # change the device port name for your device name!
                                             # on windows use 'COMxx'
 
-def read_int_resp(instr):
+def read_integer(instr):
     try:
         rd = instr.readline()
         # print('rd: ', rd)
@@ -102,7 +102,7 @@ def read_int_resp(instr):
         resp = 0
     return resp
 
-# instrument setup
+# main code
 print()
 print('B&K PRECISION REMOTE CONTROL EXAMPLE BY CISTEK')
 print('LIST PROGRAM EXECUTION ', script_ver)
@@ -142,29 +142,37 @@ if bk.is_open:
 
         # Select program 1
         bk.write("PROG 1\r\n".encode())
+        time.sleep(0.2)
         bk.write("PROG:TOTA?\r\n".encode())
-        steps = read_int_resp(bk)
+        time.sleep(0.2)
+        steps = read_integer(bk)
         print("PROG:TOTA? : ", steps)
         if steps == 0:
             print('PROGRAM 1 IS EMPTY')
         else:
             bk.write("PROG:RUN ON\r\n".encode())
+            time.sleep(0.2)
             print('PROG:RUN ON')
             while True:
+                time.sleep(0.2)
                 bk.write("PROG:RUN?\r\n".encode())
+                time.sleep(0.2)
                 resp = bk.readline()
                 if b'ON' in resp:
                     print("PROGRAM RUNNING ...")
                     break
             while True:
+                time.sleep(0.2)
                 bk.write("PROG:RUN?\r\n".encode())
+                time.sleep(0.2)
                 resp = bk.readline()
                 if b'OFF' in resp:
                     print("PROGRAM STOPPED.")
                     break
             bk.write("PROG:RUN OFF\r\n".encode())
         time.sleep(2)
-        bk.write("OUTP OFF\r\n".encode())
+        # bk.write("OUTP OFF\r\n".encode())
+        bk.write("OUTP ON\r\n".encode())
         time.sleep(0.2)
         bk.write("OUTP?\r\n".encode())
         print("OUTP? : ", bk.readline())

@@ -87,7 +87,7 @@ model_id = b'XLN3640'                       # change the model_id to your XLN mo
 portname = '/dev/tty.usbserial-275K22178'   # change the device port name for your device name!
                                             # on windows use 'COMxx'
 
-# instrument setup
+# main code
 print()
 print('B&K PRECISION REMOTE CONTROL EXAMPLE BY CISTEK')
 print('INSTRUMENT IDENTIFICATION ', script_ver)
