@@ -92,7 +92,7 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 import matplotlib.style as mplstyle
 
-script_ver = "v1.0.8"
+script_ver = "v1.0.9"
 model_id = b'XLN3640'                       # change the model_id to your XLN model
 portname = '/dev/tty.usbserial-275K22178'   # change the device port name for your device name!
                                             # on windows use 'COMxx'
@@ -196,6 +196,7 @@ bk.timeout = 0.2
 bk.open()
 if bk.is_open:
     print('Serial port OPEN')
+    # The serial port is open, but we need to make the power supply to respond to *IDN? before sending commands. 
     bk.reset_input_buffer()
     bk.reset_output_buffer()
     bk.write("\r\n".encode())               
@@ -213,6 +214,8 @@ if bk.is_open:
     print('Instrument VERSION:\t', version)
     print('Instrument SN:\t\t', sernum)
     if model_id in model:
+        # The power supply responded. Now we can send SCPI commands. 
+        print(model_id.decode(), "validated!")
         bk.write("*cls\r\n".encode())
         
         # turn output ON

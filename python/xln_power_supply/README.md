@@ -1,18 +1,39 @@
 # BK Precision XLN High Power Programmable DC Power Supplies
 These python scripts are for the BK XLN Series High Power Programmable DC Power Supplies
 
+<br>
  
-### Models
+## Models
 Models: XLN3640, XLN6024, XLN8018, XLN10014, XLN15010, XLN30052, XLN60026
 
-### Documentation
-Manual: [Series Manual](/docs/datasheets/XLN_Series_manual.pdf)
+<br>
 
-Data Sheet: [Series Data Sheet](/docs/datasheets/XLN_Series_datasheet.pdf)
+## Documentation
+Manual: [Series Manual](/docs/datasheets/XLN_Series_manual.pdf) <br>
+Data Sheet: [Series Data Sheet](/docs/datasheets/XLN_Series_datasheet.pdf) <br>
+Serial-to-USB Bridge: [CP1202](/docs/datasheets/CP2102-9.pdf) <br>
 
-Serial-to-USB Bridge: [CP1202](/docs/datasheets/CP2102-9.pdf)
+<br>
 
-### Script Usage
+## Serial Port Configuration
+
+The XLN power supplies have the following configuration:
+
+```python
+bk.baudrate=57600
+bk.bytesize=8
+bk.parity='N'
+bk.stopbits=1
+bk.xonxoff=False
+bk.rtscts=False
+bk.dsrdtr=False
+```
+
+The above settings are the default settings for the ```pyserial``` module, except the baudrate, which is ```9600baud```. You have to use ```57600baud``` with the XLN power supplies.
+
+<br>
+
+## Scripts Usage
 The following steps must be done before using these scripts: 
 
 1) Identify the serial port name of your instrument. On Windows, this is a ```COMxx``` port name. On MacOS, this is ```/dev/tty.usbserial-{sernum}```, where ```{sernum}``` is the serial number of the XLN power supply. You can use the script [list_ports.py](../list_ports.py) to list all serial port devices in your system, and identify the correct Silicon Labs [CP1202](/docs/datasheets/CP2102-9.pdf) USB Bridge device port to use.
@@ -32,7 +53,9 @@ portname = '/dev/tty.usbserial-275K22178'   # change the device port name for yo
 
 4) The XLN power supplies use an internal serial-to-USB bridge chip (CP1202), that is bus-powered by the USB cable. This means that even when the power supply is unpowered, or when the internal processor is unresponsive, the serial port will be normally enumerated and opened. This requires another level of authentication before starting sending commands to the XLN power supply. We verify that the MODEL string returned by the instrument matches the expected ```model_id``` string, and issue and error when it fails to return the correct model string. 
 
-### Scripts included in this folder
+<br>
+
+## Scripts included in this folder
 
 - [xln_id.py](./xln_id.py) — retrieves ID info of the connected XLN power supply
 - [xln_clr_pgm.py](./xln_clr_pgm.py) — clears all internal stored programs
@@ -41,7 +64,9 @@ portname = '/dev/tty.usbserial-275K22178'   # change the device port name for yo
 - [xln_run_pgm.py](./xln_run_pgm.py) — executes the program stored at PROG1
 - [xln_wave.py](./xln_wave.py) — generate a staircase waveform and display realtime voltage and current
 
-### Operating Tips for the XLN Series
+<br>
+
+## Operating Tips for the XLN Series
 Whenever a remote command is received from the serial port, the XLN power supply enters REMOTE MODE, and the front display indicates __RMT__ in the lower-right corner. 
 
 The frontal keyboard is LOCKED in RMT mode, and the user cannot access any local function. 
