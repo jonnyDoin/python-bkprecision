@@ -1,6 +1,6 @@
 ###################################################################################################
-#   LIST_PORTS - LIST ALL SERIAL PORTS IN THE SYSTEM
-#   ------------------------------------------------
+#   LIST_SERIAL_PORTS - LIST ALL SERIAL PORTS IN THE SYSTEM
+#   -------------------------------------------------------
 #
 #   This is a helper script to find the correct serial port name for a BK XLN power supply.
 #   
@@ -60,7 +60,7 @@ from serial.tools import list_ports as lp
 script_ver = "v1.0.2"
 
 print()
-print('LIST PORTS ', script_ver)
+print('LIST SERIAL PORTS ', script_ver)
 print('----------------------------------------------')
 
 for com in lp.comports():

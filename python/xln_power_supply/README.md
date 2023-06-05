@@ -9,8 +9,9 @@ Models: XLN3640, XLN6024, XLN8018, XLN10014, XLN15010, XLN30052, XLN60026
 <br>
 
 ## Documentation
-Manual: [Series Manual](/docs/datasheets/XLN_Series_manual.pdf) <br>
-Data Sheet: [Series Data Sheet](/docs/datasheets/XLN_Series_datasheet.pdf) <br>
+XLN Manual: [Series Manual](/docs/datasheets/XLN_Series_manual.pdf) <br>
+XLN Programming Manual: [Programming Manual](/docs/datasheets/BK%20Precision%208600_Series_programming_manual.pdf) <br>
+XLN Data Sheet: [Series Data Sheet](/docs/datasheets/XLN_Series_datasheet.pdf) <br>
 Serial-to-USB Bridge: [CP1202](/docs/datasheets/CP2102-9.pdf) <br>
 
 <br>
@@ -63,6 +64,7 @@ portname = '/dev/tty.usbserial-275K22178'   # change the device port name for yo
 - [xln_gen_pgm_sine.py](./xln_gen_pgm_sine.py) — generates a sinewave burst waveform in PROG1
 - [xln_run_pgm.py](./xln_run_pgm.py) — executes the program stored at PROG1
 - [xln_wave.py](./xln_wave.py) — generate a staircase waveform and display realtime voltage and current
+
 
 <br>
 
