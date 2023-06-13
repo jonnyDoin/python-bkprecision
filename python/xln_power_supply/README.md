@@ -69,6 +69,21 @@ portname = '/dev/tty.usbserial-275K22178'   # change the device port name for yo
 
 <br>
 
+## SCPI commands for XLN Power Supplies
+
+The SCPI commands that you can send via serial port to the XLN Power Supply are detailed in the [XLN Series Manual](/docs/datasheets/XLN_Series_manual.pdf), at pages 1-60 to 1-74. 
+These commands are used as exemplified in the scripts. The following python code snippet sets the power supply output to 12Vdc:
+
+```python
+bk = serial.Serial()                    # obtain 'bk' serial port object
+... # configure port, verify XLN is responding
+bk.write("SOUR:VOLT 12.0\r\n".encode()) # set output voltage to 12Vdc
+bk.write("OUTP ON\r\n".encode())        # turn output voltage ON
+... 
+bk.close()                              # close serial port
+```
+
+
 ## Operating Tips for the XLN Series
 Whenever a remote command is received from the serial port, the XLN power supply enters REMOTE MODE, and the front display indicates __RMT__ in the lower-right corner. 
 

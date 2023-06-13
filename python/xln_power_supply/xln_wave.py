@@ -200,7 +200,7 @@ if bk.is_open:
     bk.reset_input_buffer()
     bk.reset_output_buffer()
     bk.write("\r\n".encode())               
-    bk.write("*idn?\r\n".encode())          
+    bk.write("*idn?\r\n".encode())
     idn = bk.readline()                     
     bk.write("MODEL?\r\n".encode())
     model = bk.readline()                   
