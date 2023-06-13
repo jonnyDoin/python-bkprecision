@@ -21,35 +21,22 @@ Always read the manufacturers programming manual for the set of SCPI and proprie
 <br>
 
 ## Documentation
-XLN Manual: [Series Manual](/docs/datasheets/XLN_Series_manual.pdf) <br>
-XLN Programming Manual: [Programming Manual](/docs/datasheets/BK%20Precision%208600_Series_programming_manual.pdf) <br>
-XLN Data Sheet: [Series Data Sheet](/docs/datasheets/XLN_Series_datasheet.pdf) <br>
+XLN Power Supply Manual: [Series Manual](/docs/datasheets/XLN_Series_manual.pdf) <br>
+XLN Power Supply Data Sheet: [Series Data Sheet](/docs/datasheets/XLN_Series_datasheet.pdf) <br>
 Serial-to-USB Bridge: [CP1202](/docs/datasheets/CP2102-9.pdf) <br>
+BK 8600 Electronic Load Programming Manual: [Programming Manual](/docs/datasheets/BK%20Precision%208600_Series_programming_manual.pdf) <br>
 
 <br>
 
 ## CODE
 
-[list_ports.py](/python/list_ports.py) <br>
-+ lists all USB serial ports (USB CDC) in the system. Use to find your serial port. The XLN series has a Silicon Labs CP1202 Serial to USB bridge.
-  
-[xln_id.py](/python/xln_power_supply/xln_id.py) <br>
-+ simple program to connect and identify a XLN power supply
-
-[xln_clr_pgm.py](/python/xln_power_supply/xln_clr_pgm.py) <br>
-+ clears all internal programs on the XLN power supply
-
-[xln_gen_pgm.py](/python/xln_power_supply/xln_gen_pgm.py) <br>
-+ generates a staircase waveform program in the XLN power supply
-
-[xln_gen_pgm_sine.py](/python/xln_power_supply/xln_gen_pgm_sine.py) <br>
-+ generates a sinewave program in the XLN power supply
-
-[xln_run_pgm.py](/python/xln_power_supply/xln_run_pgm.py) <br>
-+ runs the program at PROG1 memory in the XLN power supply
-
-[xln_wave.py](/python/xln_power_supply/xln_wave.py) <br>
-+ generates a staircase waveform using SCPI commands over the serial interface
+- [xln_id.py](/python/xln_power_supply/xln_id.py) — retrieves ID info of the connected XLN power supply
+- [xln_clr_pgm.py](/python/xln_power_supply/xln_clr_pgm.py) — clears all internal stored programs
+- [xln_gen_pgm.py](/python/xln_power_supply/xln_gen_pgm.py) — generates a staircase waveform in PROG1
+- [xln_gen_pgm_sine.py](/python/xln_power_supply/xln_gen_pgm_sine.py) — generates a sinewave burst waveform in PROG1
+- [xln_run_pgm.py](/python/xln_power_supply/xln_run_pgm.py) — executes the program stored at PROG1
+- [xln_wave.py](/python/xln_power_supply/xln_wave.py) — generate a staircase waveform and display realtime voltage and current
+- [list_serial_ports.py](/python/xln_power_supply/list_serial_ports.py) – lists all USB serial ports (USB CDC) in the system. Use to find your serial port. The XLN series has a Silicon Labs CP1202 Serial to USB bridge.
 
 ## LICENSE
 

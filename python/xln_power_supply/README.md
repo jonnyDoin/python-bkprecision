@@ -9,10 +9,10 @@ Models: XLN3640, XLN6024, XLN8018, XLN10014, XLN15010, XLN30052, XLN60026
 <br>
 
 ## Documentation
-XLN Manual: [Series Manual](/docs/datasheets/XLN_Series_manual.pdf) <br>
-XLN Programming Manual: [Programming Manual](/docs/datasheets/BK%20Precision%208600_Series_programming_manual.pdf) <br>
-XLN Data Sheet: [Series Data Sheet](/docs/datasheets/XLN_Series_datasheet.pdf) <br>
+XLN Power Supply Manual: [Series Manual](/docs/datasheets/XLN_Series_manual.pdf) <br>
+XLN Power Supply Data Sheet: [Series Data Sheet](/docs/datasheets/XLN_Series_datasheet.pdf) <br>
 Serial-to-USB Bridge: [CP1202](/docs/datasheets/CP2102-9.pdf) <br>
+BK 8600 Electronic Load Programming Manual: [Programming Manual](/docs/datasheets/BK%20Precision%208600_Series_programming_manual.pdf) <br>
 
 <br>
 
@@ -64,6 +64,7 @@ portname = '/dev/tty.usbserial-275K22178'   # change the device port name for yo
 - [xln_gen_pgm_sine.py](./xln_gen_pgm_sine.py) — generates a sinewave burst waveform in PROG1
 - [xln_run_pgm.py](./xln_run_pgm.py) — executes the program stored at PROG1
 - [xln_wave.py](./xln_wave.py) — generate a staircase waveform and display realtime voltage and current
+- [list_ports.py](./list_serial_ports.py) – lists all USB serial ports (USB CDC) in the system. Use to find your serial port. The XLN series has a Silicon Labs CP1202 Serial to USB bridge.
 
 
 <br>
