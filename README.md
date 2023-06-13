@@ -30,6 +30,8 @@ BK 8600 Electronic Load Programming Manual: [Programming Manual](/docs/datasheet
 
 ## CODE
 
+The code examples are in the [XLN examples](/python/xln_power_supply/) folder. Please read the [README](/python/xln_power_supply/README.md) for details on the code examples.
+
 - [xln_id.py](/python/xln_power_supply/xln_id.py) — retrieves ID info of the connected XLN power supply
 - [xln_clr_pgm.py](/python/xln_power_supply/xln_clr_pgm.py) — clears all internal stored programs
 - [xln_gen_pgm.py](/python/xln_power_supply/xln_gen_pgm.py) — generates a staircase waveform in PROG1

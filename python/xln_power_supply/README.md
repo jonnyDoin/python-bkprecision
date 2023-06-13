@@ -75,6 +75,8 @@ The SCPI commands that you can send via serial port to the XLN Power Supply are 
 These commands are used as exemplified in the scripts. The following python code snippet sets the power supply output to 12Vdc:
 
 ```python
+import serial
+...
 bk = serial.Serial()                    # obtain 'bk' serial port object
 ... # configure port, verify XLN is responding
 bk.write("SOUR:VOLT 12.0\r\n".encode()) # set output voltage to 12Vdc
